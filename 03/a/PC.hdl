@@ -16,5 +16,23 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    // load,reset,incの際にregisterで読み込む
+    Or(a=load, b=reset, out=outres);
+    Or(a=outres, b=inc, out=outstart);
+
+    Register(in=outmux, load=outstart, out=outa);
+
+    // 上記のif, else if の順番で優先順位となるようにregisterのinの値を制御する
+    Inc16(in=outa, out=outincc);
+
+    Mux16(a=in, b=outincc, sel=inc, out=outinc);
+
+    Mux16(a=outinc, b=in, sel=load, out=outload);
+
+    Mux16(a=outload, b[0..15]=false, sel=reset, out=outmux);
+
+
+
+
+    Or16(a=outa, b[0..15]=false, out=out);
 }
