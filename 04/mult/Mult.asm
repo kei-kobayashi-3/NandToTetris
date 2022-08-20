@@ -10,3 +10,38 @@
 // R0 >= 0, R1 >= 0, and R0*R1 < 32768.
 
 // Put your code here.
+
+// R2 = left * right
+// while(right > 0){
+//   R2 += left;
+//   right--;
+// }
+
+  @R2
+  M=0
+
+(LOOP)
+  @R0
+  D=M //D=right
+  @END
+  D;JEQ //もしright=0ならばENDへ移動
+
+  @R1
+  D=M
+  @END
+  D;JEQ //もしleft=0ならばENDへ移動
+
+  @R2
+  M=M+D //sum = sum + left
+
+  @R0
+  D=M //D =right
+  @R0
+  M=D-1 //right = right -1
+
+  @LOOP
+  0;JMP  //LOOPへ移動
+
+(END)
+  @END
+  0;JMP
