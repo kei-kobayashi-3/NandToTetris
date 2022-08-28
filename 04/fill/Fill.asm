@@ -17,67 +17,60 @@
 // 512/16=32 1row 32word * 256 = 8192 (8K)
 // @SCREEN + 8192 - 1まで
 
+(GO_WHITE)
 @SCREEN
-AD=A
-
+D=A
 @temp
 M=D
 
 (FILL_WHITE)
 
-//if KBD==on goto FILL_BLACK
 @KBD
 D=M
-@FILL_BLACK
+@GO_BLACK
 D;JNE
 
-//if temp==SCREEN goto FILL_WHITE and not change
-@temp
-D=M
-@SCREEN
-M=0
-D=D-A
-@FILL_WHITE
-D;JEQ
-
-//if temp>=SCREEN
-@temp
-M=M
 @temp
 AD=M
 M=0
-@temp
-M=M-1
-@KBD
-D=M
+
+@24575
+D=A-D
 @FILL_WHITE
 D;JEQ
 
+@temp
+M=M+1
+
+@FILL_WHITE
+0;JMP
+
+
+(GO_BLACK)
+@SCREEN
+D=A
+@temp
+M=D
+
 (FILL_BLACK)
-//fill black
+
+@KBD
+D=M
+@GO_WHITE
+D;JEQ
+
+
 @temp
 AD=M
 M=-1
 
-//next
+@24575
+D=A-D
+@FILL_BLACK
+D;JEQ
+
 @temp
 M=M+1
 
-//goto end
-@24575
-D=D-A
-@END
-D;JEQ
-
-//if KBD is 0(not on) goto FILL_WHITE
-@KBD
-D=M
-@FILL_WHITE
-D;JEQ
-
-
 @FILL_BLACK
-0;JMP
-
-(END)
 0;JMP
