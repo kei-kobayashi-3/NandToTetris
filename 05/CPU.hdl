@@ -61,7 +61,6 @@ CHIP CPU {
     DRegister(in=outALU1, load=outm5, out=outD1);
 
     //writeM: {i,d3}={0,0}->false, {0,1}->false, {1,0}->false, {1,1}->true
-    Mux(a=false, b=true, sel=instruction[15], out=outm6);
     Mux(a=false, b=outm4, sel=instruction[3], out=writeM);
 
     //addressM:
