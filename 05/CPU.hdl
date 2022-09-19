@@ -46,7 +46,7 @@ CHIP CPU {
     //A: {i,d1}={0,0}->true, {0,1}->true, {1,0}->false, {1,1}->true
     Mux(a=true, b=false, sel=instruction[15], out=outm2);
     Mux(a=outm2, b=true, sel=instruction[5], out=outm3);
-    Register(in=outM1, load=outm3, out=outA1);
+    ARegister(in=outM1, load=outm3, out=outA1);
 
     //{a}={0}->A, {a}={1}->M  (i=0の場合は考えていない)
     Mux16(a=outA1, b=inM, sel=instruction[12], out=outM2);
